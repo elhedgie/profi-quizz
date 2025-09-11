@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { toRefs, computed } from 'vue'
+import { computed } from 'vue'
 
 type OptionKey = 'A' | 'B' | 'C' | 'D'
 
@@ -29,8 +29,6 @@ const emit = defineEmits<{
   (e: 'update:show-only-incorrect', value: boolean): void
   (e: 'restart'): void
 }>()
-
-const { score, total, percent, incorrectCount } = toRefs(props)
 
 function toggleExpandAll() {
   emit('update:expand-all', !props.expandAll)

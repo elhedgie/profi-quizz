@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useQuizStore } from '@/stores/quiz'
-import { ref, watch, nextTick, computed } from 'vue'
+import { ref, watch, nextTick, computed, onMounted } from 'vue'
 import QuizHeader from '@/components/quiz/QuizHeader.vue'
 import QuizQuestion from '@/components/quiz/QuizQuestion.vue'
 import QuizFooter from '@/components/quiz/QuizFooter.vue'
@@ -10,7 +10,6 @@ import QuizResult from '@/components/quiz/QuizResult.vue'
 const quiz = useQuizStore()
 const { current, total, currentIndex, progress, finished, score } = storeToRefs(quiz)
 
-/** выбор направления анимации (в прошлое / вперёд) */
 const direction = ref<'back' | 'forward'>('back')
 watch(current, (n, o) => {
   const ny = n?.year
@@ -20,7 +19,6 @@ watch(current, (n, o) => {
   }
 })
 
-/** «скоростные линии» на фоне — кратко навешиваем класс */
 const rootEl = ref<HTMLElement | null>(null)
 watch(current, async () => {
   await nextTick()
@@ -29,11 +27,42 @@ watch(current, async () => {
   setTimeout(() => rootEl.value?.classList.remove('is-rewinding'), 520)
 })
 
-/** данные для финального экрана */
+const bgSrc = computed(() => current.value?.image ?? '')
+
+/** preload текущего и следующего изображений */
+function preloadImage(href: string) {
+  if (!href) return
+  const key = `preload-${href}`
+  if (document.querySelector(`link[data-k="${CSS.escape(key)}"]`)) return
+  const link = document.createElement('link')
+  link.rel = 'preload'
+  link.as = 'image'
+  link.href = href
+  link.setAttribute('data-k', key)
+  document.head.appendChild(link)
+}
+function preloadAround() {
+  const cur = current.value
+  if (!cur?.image) return
+  preloadImage(cur.image)
+  const next = quiz.allQuestions[currentIndex.value + 1]
+  if (next?.image) preloadImage(next.image)
+}
+
+onMounted(preloadAround)
+watch([currentIndex, finished], () => {
+  if (!finished.value) preloadAround()
+})
+
 const percent = computed(() => Math.round((score.value / (total.value || 1)) * 100))
 const incorrectCount = computed(() =>
   quiz.allQuestions.reduce((acc, q) => acc + (quiz.answers[q.id] !== q.correct ? 1 : 0), 0),
 )
+const canProceed = computed(() => {
+  const q = current.value
+  if (!q) return false
+  return !!quiz.answers[q.id]
+})
 const showOnlyIncorrect = ref(false)
 const expandAll = ref(false)
 
@@ -54,11 +83,9 @@ const filteredQuestions = computed(() =>
 
 <template>
   <main class="quiz" ref="rootEl">
-    <div
-      v-if="current?.image && !finished"
-      class="quiz__bg"
-      :style="{ backgroundImage: `url(${current.image})` }"
-    />
+    <picture v-if="current?.image && !finished" class="quiz__bg" aria-hidden="true">
+      <img :key="bgSrc" :src="bgSrc" decoding="async" loading="eager" fetchpriority="high" alt="" />
+    </picture>
 
     <section class="quiz__container" v-if="!finished">
       <QuizHeader :current-index="currentIndex" :total="total" :progress="progress" />
@@ -76,6 +103,7 @@ const filteredQuestions = computed(() =>
       <QuizFooter
         :is-first="currentIndex === 0"
         :is-last="currentIndex + 1 === total"
+        :can-next="canProceed"
         @prev="quiz.prev"
         @next="quiz.next"
       />
@@ -117,14 +145,21 @@ const filteredQuestions = computed(() =>
 .quiz__bg {
   position: fixed;
   inset: 0;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
   z-index: 0;
+  display: block;
+}
+.quiz__bg img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
   transition: transform var(--dur-enter) var(--easing);
+  will-change: transform;
 }
 
-.quiz.is-rewinding .quiz__bg {
+.quiz.is-rewinding .quiz__bg img {
   transform: scale(1.02);
 }
 
@@ -142,8 +177,6 @@ const filteredQuestions = computed(() =>
   display: flex;
   flex-direction: column;
 }
-
-/* Стили по годам перенесены в QuizQuestion.vue */
 
 /* Переходы вопросов */
 .rewind-enter-active,
@@ -210,8 +243,7 @@ const filteredQuestions = computed(() =>
   .rewind-leave-active,
   .forward-enter-active,
   .forward-leave-active,
-  .quiz.is-rewinding .quiz__bg::before,
-  .quiz.is-rewinding .quiz__bg,
+  .quiz.is-rewinding .quiz__bg img,
   .quiz__year .year-flip {
     transition: none !important;
     animation: none !important;

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { onMounted, watch } from 'vue'
+import { ensureYearFontLoaded } from '@/utils/fontLoader'
 type OptionKey = 'A' | 'B' | 'C' | 'D'
 
 type Question = {
@@ -16,6 +18,15 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: 'select', key: OptionKey): void
 }>()
+
+onMounted(() => {
+  ensureYearFontLoaded(props.question.year)
+})
+
+watch(
+  () => props.question.year,
+  (year) => ensureYearFontLoaded(year),
+)
 </script>
 
 <template>

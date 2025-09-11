@@ -1,13 +1,9 @@
 <script setup lang="ts">
-import { toRefs } from 'vue'
-
 const props = defineProps<{
   currentIndex: number
   total: number
   progress: number
 }>()
-
-const { currentIndex, total, progress } = toRefs(props)
 </script>
 
 <template>
@@ -17,7 +13,7 @@ const { currentIndex, total, progress } = toRefs(props)
       <p class="quiz__subtitle">Вопрос {{ currentIndex + 1 }} из {{ total }}</p>
     </div>
     <div class="quiz__progress">
-      <div class="quiz__progress-bar" :style="{ width: progress * 100 + '%' }" />
+      <div class="quiz__progress-bar" :style="{ width: props.progress * 100 + '%' }" />
     </div>
   </header>
 </template>
