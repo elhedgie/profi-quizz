@@ -291,6 +291,7 @@ const filteredQuestions = computed(() =>
 }
 .qa-question {
   color: #e5e7eb;
+  overflow-wrap: anywhere;
 }
 .badge {
   font-size: 12px;
@@ -354,12 +355,49 @@ const filteredQuestions = computed(() =>
   }
   .result__actions {
     justify-content: center;
+    width: 100%;
+  }
+  .result__actions .btn {
+    flex: 1 1 auto;
   }
   .qa-summary {
     grid-template-columns: 64px 1fr auto;
+    gap: 10px;
   }
   .qa-row {
     grid-template-columns: 1fr;
+    padding: 10px;
+  }
+  .result__ring {
+    width: 96px;
+    height: 96px;
+  }
+  .badge {
+    font-size: 11px;
+    padding: 4px 8px;
+  }
+  .quiz__result {
+    padding: 14px;
+    border-radius: 12px;
+  }
+  .result__toolbar {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .toggle {
+    font-size: 13px;
+  }
+  .linklike {
+    padding: 6px 6px;
+  }
+}
+
+@media (max-width: 420px) {
+  .qa-summary {
+    grid-template-columns: 48px 1fr;
+  }
+  .badge {
+    justify-self: start;
   }
 }
 </style>

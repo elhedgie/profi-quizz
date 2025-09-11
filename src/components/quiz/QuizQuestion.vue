@@ -91,7 +91,7 @@ watch(
   align-items: center;
   text-align: left;
   padding: 12px 14px;
-  height: 62px;
+  min-height: 56px;
   background: rgba(0, 0, 0, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 12px;
@@ -121,6 +121,25 @@ watch(
 .quiz__option-text {
   opacity: 0.95;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+@media (max-width: 720px) {
+  .quiz__year {
+    --fs: 32px;
+    --lh: 36px;
+  }
+  .quiz__text {
+    font-size: 16px;
+  }
+  .quiz__options {
+    gap: 12px;
+  }
+  .quiz__option {
+    padding: 12px;
+  }
+  .quiz__option-key {
+    min-width: 20px;
+  }
 }
 </style>
 

@@ -63,4 +63,18 @@ const emit = defineEmits<{
   opacity: 0.6;
   cursor: not-allowed;
 }
+
+@media (max-width: 720px) {
+  .quiz__footer {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .quiz__footer-right {
+    justify-content: space-between;
+  }
+  .quiz__nav {
+    width: 100%;
+  }
+}
 </style>

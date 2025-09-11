@@ -166,10 +166,10 @@ const filteredQuestions = computed(() =>
 .quiz__container {
   position: relative;
   z-index: 2;
-  width: 800px;
-  max-width: 800px;
+  width: 100%;
+  max-width: 860px;
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: 32px 16px;
   background: rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(8px);
   border-radius: 20px;
@@ -255,18 +255,13 @@ const filteredQuestions = computed(() =>
 
 /* responsive */
 @media (max-width: 720px) {
-  .result__hero {
-    grid-template-columns: 1fr;
-    text-align: center;
+  .quiz {
+    padding: 16px;
   }
-  .result__actions {
-    justify-content: center;
-  }
-  .qa-summary {
-    grid-template-columns: 64px 1fr auto;
-  }
-  .qa-row {
-    grid-template-columns: 1fr;
+  .quiz__container {
+    padding: 20px 14px;
+    border-radius: 14px;
+    min-height: auto;
   }
 }
 </style>

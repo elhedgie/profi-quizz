@@ -55,4 +55,14 @@ const props = defineProps<{
   background: linear-gradient(135deg, #6366f1, #ec4899);
   transition: width 0.2s ease;
 }
+
+@media (max-width: 720px) {
+  .quiz__header {
+    gap: 8px;
+  }
+  .quiz__home {
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+}
 </style>
