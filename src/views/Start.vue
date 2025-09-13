@@ -158,6 +158,7 @@ function startQuiz() {
   position: absolute;
   bottom: -90px;
   right: 20px;
+  width: 150px;
 }
 
 .left-big-star {
