@@ -196,7 +196,7 @@ function startQuiz() {
 
 .lede-sep {
   height: 1px;
-  margin: 30px 0;
+  margin: 30px auto;
   width: min(86%, 560px);
   background: linear-gradient(
     90deg,
