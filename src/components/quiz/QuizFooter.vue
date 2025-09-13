@@ -57,9 +57,11 @@ const emit = defineEmits<{
     border-color 0.12s ease,
     background 0.12s ease;
 }
-.quiz__nav:hover {
-  transform: translateY(-1px);
-  background: #e8eafc;
+@media (hover: hover) {
+  .quiz__nav:hover {
+    transform: translateY(-1px);
+    background: #e8eafc;
+  }
 }
 .quiz__nav--primary {
   border-color: transparent;

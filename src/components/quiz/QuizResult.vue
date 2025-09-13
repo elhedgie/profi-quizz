@@ -177,9 +177,11 @@ const filteredQuestions = computed(() =>
     border-color 0.12s ease,
     background 0.12s ease;
 }
-.btn:hover {
-  transform: translateY(-1px);
-  background: #e8eafc;
+@media (hover: hover) {
+  .btn:hover {
+    transform: translateY(-1px);
+    background: #e8eafc;
+  }
 }
 .btn--primary {
   border-color: transparent;
@@ -229,8 +231,10 @@ const filteredQuestions = computed(() =>
   padding: 6px 8px;
   border-radius: 8px;
 }
-.linklike:hover {
-  background: rgba(99, 102, 241, 0.12);
+@media (hover: hover) {
+  .linklike:hover {
+    background: rgba(99, 102, 241, 0.12);
+  }
 }
 .qa-list {
   list-style: none;
@@ -256,8 +260,10 @@ const filteredQuestions = computed(() =>
   padding-bottom: 44px;
   background: #f4f5fb;
 }
-.qa-card:hover {
-  transform: translateY(-1px);
+@media (hover: hover) {
+  .qa-card:hover {
+    transform: translateY(-1px);
+  }
 }
 .qa-summary {
   list-style: none;

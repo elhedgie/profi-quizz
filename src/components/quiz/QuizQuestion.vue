@@ -119,8 +119,10 @@ watch(
   transition: transform 0.2s ease;
 }
 
-.quiz__image:hover {
-  transform: scale(1.02);
+@media (hover: hover) {
+  .quiz__image:hover {
+    transform: scale(1.02);
+  }
 }
 
 .quiz__year {
@@ -159,9 +161,11 @@ watch(
     background 0.12s ease,
     border-color 0.12s ease;
 }
-.quiz__option:hover {
-  transform: translateY(-1px);
-  background: #e6e8fc;
+@media (hover: hover) {
+  .quiz__option:hover {
+    transform: translateY(-1px);
+    background: #e6e8fc;
+  }
 }
 .quiz__option.is-selected {
   outline: 2px solid #c2cdfb;

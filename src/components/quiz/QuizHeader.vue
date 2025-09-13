@@ -47,8 +47,10 @@ const props = defineProps<{
   border: 1px solid rgba(0, 0, 0, 0.1);
   background: #f5f6fe;
 }
-.quiz__home:hover {
-  background: #e8eafc;
+@media (hover: hover) {
+  .quiz__home:hover {
+    background: #e8eafc;
+  }
 }
 .quiz__subtitle {
   margin: 0;

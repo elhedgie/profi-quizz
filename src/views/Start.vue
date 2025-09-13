@@ -234,9 +234,11 @@ function startQuiz() {
     transform 0.12s ease,
     filter 0.12s ease;
 }
-.cta:hover {
-  transform: translateY(-1px);
-  filter: brightness(1.05);
+@media (hover: hover) {
+  .cta:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.05);
+  }
 }
 .icon {
   margin-left: 8px;
