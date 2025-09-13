@@ -9,11 +9,13 @@ const props = defineProps<{
 <template>
   <header class="quiz__header">
     <router-link class="quiz__home" :to="{ name: 'start' }">На главную</router-link>
-    <div class="quiz__title">
-      <p class="quiz__subtitle">Вопрос {{ currentIndex + 1 }} из {{ total }}</p>
-    </div>
-    <div class="quiz__progress">
-      <div class="quiz__progress-bar" :style="{ width: props.progress * 100 + '%' }" />
+    <div class="wrap">
+      <div class="quiz__title">
+        <p class="quiz__subtitle">Вопрос {{ currentIndex + 1 }} из {{ total }}</p>
+      </div>
+      <div class="quiz__progress">
+        <div class="quiz__progress-bar" :style="{ width: props.progress * 100 + '%' }" />
+      </div>
     </div>
   </header>
 </template>
@@ -22,37 +24,47 @@ const props = defineProps<{
 .quiz__header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   margin-bottom: 24px;
   gap: 10px;
 }
+.wrap {
+  display: block;
+  flex: 1;
+}
+
+.quiz__title {
+  margin-bottom: 12px;
+}
 .quiz__home {
-  color: #a5b4fc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 140px;
+  height: 36px;
+  color: #8b8bab;
   text-decoration: none;
-  padding: 6px 10px;
   border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: #f5f6fe;
 }
 .quiz__home:hover {
-  background: rgba(99, 102, 241, 0.15);
+  background: #e8eafc;
 }
 .quiz__subtitle {
   margin: 0;
-  color: #f3f4f6;
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+  color: #242730;
   font-size: 14px;
 }
 .quiz__progress {
   flex: 1;
   height: 8px;
-  background: rgba(0, 0, 0, 0.3);
+  background: #f4f5fb;
   border-radius: 999px;
   overflow: hidden;
 }
 .quiz__progress-bar {
   height: 100%;
-  background: linear-gradient(135deg, #6366f1, #ec4899);
+  background: linear-gradient(135deg, #ff758b, #fa2a48);
   transition: width 0.2s ease;
 }
 

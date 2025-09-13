@@ -1,0 +1,15 @@
+@font-face {
+  font-family: 'ONY-FORMDigital-PROFI';
+  src: url('/fonts/ONY-FORMDigital-PROFI-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'ONY-FORMDigital-PROFI';
+  src: url('/fonts/ONY-FORMDigital-PROFI-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}

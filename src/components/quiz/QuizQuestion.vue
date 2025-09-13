@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, watch } from 'vue'
+import { onMounted, watch, ref } from 'vue'
 import { ensureYearFontLoaded } from '@/utils/fontLoader'
 type OptionKey = 'A' | 'B' | 'C' | 'D'
 
@@ -8,6 +8,7 @@ type Question = {
   year: number
   question: string
   options: Record<OptionKey, string>
+  image?: string
 }
 
 const props = defineProps<{
@@ -18,6 +19,16 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: 'select', key: OptionKey): void
 }>()
+
+const showImageModal = ref(false)
+
+function openImageModal() {
+  showImageModal.value = true
+}
+
+function closeImageModal() {
+  showImageModal.value = false
+}
 
 onMounted(() => {
   ensureYearFontLoaded(props.question.year)
@@ -31,10 +42,22 @@ watch(
 
 <template>
   <div class="quiz__question">
-    <p class="quiz__year" :data-year="question.year">
-      <span class="year-flip">{{ question.year }}</span>
-    </p>
-    <h2 class="quiz__text">{{ question.question }}</h2>
+    <div class="quiz__header">
+      <div class="quiz__text-section">
+        <p class="quiz__year" :data-year="question.year">
+          <span class="year-flip">{{ question.year }}</span>
+        </p>
+        <h2 class="quiz__text">{{ question.question }}</h2>
+      </div>
+      <div v-if="question.image" class="quiz__image-section">
+        <img
+          :src="question.image"
+          :alt="`Изображение для вопроса ${question.year} года`"
+          class="quiz__image"
+          @click="openImageModal"
+        />
+      </div>
+    </div>
     <div class="quiz__options">
       <button
         v-for="(text, key) in question.options"
@@ -47,35 +70,69 @@ watch(
         <span class="quiz__option-text">{{ text }}</span>
       </button>
     </div>
+
+    <div v-if="showImageModal" class="image-modal" @click="closeImageModal">
+      <div class="image-modal__content" @click.stop>
+        <button class="image-modal__close" @click="closeImageModal" aria-label="Закрыть">×</button>
+        <img
+          :src="question.image"
+          :alt="`Изображение для вопроса ${question.year} года`"
+          class="image-modal__image"
+        />
+      </div>
+    </div>
   </div>
 </template>
 
 <style scoped>
+.quiz__question {
+  width: 100%;
+}
+
+.quiz__header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 24px;
+  align-items: start;
+  margin-bottom: 20px;
+}
+
+.quiz__text-section {
+  flex: 1;
+}
+
+.quiz__image-section {
+  flex-shrink: 0;
+  width: 269px;
+  height: 183px;
+  border-radius: 8px;
+  overflow: hidden;
+  object-fit: cover;
+}
+
+.quiz__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.quiz__image:hover {
+  transform: scale(1.02);
+}
+
 .quiz__year {
-  --fs: 40px;
-  --lh: 44px;
-  --fadj: 0.52;
-  display: flex;
-  align-items: center;
-  min-height: var(--lh);
   margin: 0 0 6px;
-  font-size: var(--fs);
-  line-height: var(--lh);
-  color: #fbbf24;
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
-  font-size-adjust: var(--fadj);
-  font-weight: 600;
-  perspective: 800px;
+  font-size: 48px;
+  font-weight: 500;
 }
 .quiz__text {
   margin: 0 0 14px;
   font-size: 18px;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
-  color: white;
-  font-family:
-    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  font-weight: 300;
-  line-height: 1.5;
+  color: #242730;
+  font-weight: 400;
 }
 .quiz__options {
   margin: 20px 0;
@@ -92,12 +149,11 @@ watch(
   text-align: left;
   padding: 12px 14px;
   min-height: 56px;
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: none;
+  background: #f4f5fb;
   border-radius: 12px;
-  color: white;
+  color: #242730;
   cursor: pointer;
-  backdrop-filter: blur(4px);
   transition:
     transform 0.12s ease,
     background 0.12s ease,
@@ -105,29 +161,32 @@ watch(
 }
 .quiz__option:hover {
   transform: translateY(-1px);
-  background: rgba(0, 0, 0, 0.5);
-  border-color: rgba(255, 255, 255, 0.3);
+  background: #e6e8fc;
 }
 .quiz__option.is-selected {
-  border-color: #6366f1;
-  box-shadow: 0 0 0 1px #6366f1 inset;
-  background: rgba(99, 102, 241, 0.2);
+  outline: 2px solid #c2cdfb;
+  background: #e6e8fc;
 }
 .quiz__option-key {
-  font-weight: 700;
-  color: #fbbf24;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+  font-weight: 500;
+  color: #fa2a48;
 }
 .quiz__option-text {
   opacity: 0.95;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
 }
 
 @media (max-width: 720px) {
-  .quiz__year {
-    --fs: 32px;
-    --lh: 36px;
+  .quiz__header {
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
+
+  .quiz__image-section {
+    width: 100%;
+    height: 150px;
+    order: -1;
+  }
+
   .quiz__text {
     font-size: 16px;
   }
@@ -141,72 +200,89 @@ watch(
     min-width: 20px;
   }
 }
-</style>
 
-<style scoped>
-/* Стили по годам */
-.quiz__year[data-year='2025'] {
-  font-family: 'Orbitron', monospace;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: #00ff88;
-  text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+.image-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+  animation: fadeIn 0.2s ease;
 }
-.quiz__year[data-year='2016'] {
-  font-family: 'Raleway', cursive;
-  font-weight: 300;
-  color: #ff6b35;
-  text-shadow: 0 2px 4px rgba(255, 107, 53, 0.3);
+
+.image-modal__content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.quiz__year[data-year='2009'] {
-  font-family: 'Share Tech Mono', cursive;
-  font-weight: 300;
-  color: #ffd700;
-  text-shadow: 0 2px 4px rgba(255, 215, 0, 0.4);
+
+.image-modal__close {
+  position: absolute;
+  top: -40px;
+  right: -30px;
+  border: none;
+  color: white;
+  font-size: 24px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1001;
+  background-color: transparent;
 }
-.quiz__year[data-year='1995'] {
-  font-family: 'Audiowide', cursive;
-  font-weight: 500;
-  text-transform: uppercase;
-  color: #ff00ff;
-  text-shadow: 0 0 8px rgba(255, 0, 255, 0.6);
+
+.image-modal__image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  animation: zoomIn 0.3s ease;
 }
-.quiz__year[data-year='1986'] {
-  font-family: 'Press Start 2P', cursive;
-  font-weight: 300;
-  color: #ff4444;
-  text-shadow: 0 0 6px rgba(255, 68, 68, 0.5);
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
-.quiz__year[data-year='1984'] {
-  font-family: 'Orbitron', cursive;
-  font-weight: 300;
-  color: #ff8800;
-  text-shadow: 0 2px 4px rgba(255, 136, 0, 0.4);
+
+@keyframes zoomIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
-.quiz__year[data-year='1980'] {
-  font-family: 'VT323', cursive;
-  font-weight: 300;
-  color: #00ffff;
-  text-shadow: 0 0 6px rgba(0, 255, 255, 0.5);
-}
-.quiz__year[data-year='1971'] {
-  font-family: 'Courier Prime', cursive;
-  font-weight: 300;
-  color: #ff69b4;
-  text-shadow: 0 2px 4px rgba(255, 105, 180, 0.3);
-}
-.quiz__year[data-year='1947'] {
-  font-family: 'Libre Baskerville', sans-serif;
-  font-weight: 600;
-  text-transform: uppercase;
-  color: #c0c0c0;
-  text-shadow: 0 2px 4px rgba(192, 192, 192, 0.4);
-}
-.quiz__year[data-year='1830'] {
-  font-family: 'Bodoni Moda', sans-serif;
-  font-weight: 300;
-  color: #8b4513;
-  text-shadow: 0 2px 4px rgba(139, 69, 19, 0.4);
+
+@media (max-width: 720px) {
+  .image-modal {
+    padding: 10px;
+  }
+
+  .image-modal__close {
+    top: -30px;
+    right: -10px;
+    width: 28px;
+    height: 28px;
+    font-size: 20px;
+  }
 }
 </style>

@@ -77,14 +77,6 @@ const filteredQuestions = computed(() =>
       </div>
     </header>
 
-    <div class="result__toolbar">
-      <div class="toolbar__spacer" />
-
-      <button class="linklike" @click="toggleExpandAll">
-        {{ props.expandAll ? 'Свернуть все' : 'Развернуть все' }}
-      </button>
-    </div>
-
     <ul class="qa-list">
       <li v-for="q in filteredQuestions" :key="q.id" class="qa-item">
         <details class="qa-card" :open="false">
@@ -137,12 +129,10 @@ const filteredQuestions = computed(() =>
   z-index: 2;
   width: 100%;
   max-width: 860px;
-  background: rgba(15, 23, 42, 0.9);
-  border: 1px solid rgba(31, 41, 55, 0.6);
+  background: #ffffff;
+  box-shadow: 0 4px 28px #dadff4;
   border-radius: 16px;
   padding: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(8px);
 }
 .result__hero {
   display: grid;
@@ -151,9 +141,7 @@ const filteredQuestions = computed(() =>
   align-items: center;
   padding: 18px;
   border-radius: 16px;
-  background: linear-gradient(180deg, rgba(17, 24, 39, 0.8), rgba(17, 24, 39, 0.5));
-  border: 1px solid rgba(99, 102, 241, 0.25);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  background: #ffffff;
   margin-bottom: 16px;
 }
 .result__title {
@@ -163,7 +151,7 @@ const filteredQuestions = computed(() =>
 }
 .result__subtitle {
   margin: 0;
-  color: #cbd5e1;
+  color: #242730;
 }
 .result__subtitle .dot {
   opacity: 0.6;
@@ -177,13 +165,12 @@ const filteredQuestions = computed(() =>
 }
 .btn {
   appearance: none;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  background: rgba(0, 0, 0, 0.35);
-  color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: #f5f6fe;
+  color: #8b8bab;
   padding: 10px 14px;
   border-radius: 10px;
   cursor: pointer;
-  backdrop-filter: blur(4px);
   text-decoration: none;
   transition:
     transform 0.12s ease,
@@ -192,11 +179,12 @@ const filteredQuestions = computed(() =>
 }
 .btn:hover {
   transform: translateY(-1px);
-  border-color: rgba(255, 255, 255, 0.4);
+  background: #e8eafc;
 }
 .btn--primary {
   border-color: transparent;
-  background: linear-gradient(135deg, #6366f1, #ec4899);
+  background: #d72e49;
+  color: white;
 }
 .result__ring {
   --val: 0%;
@@ -204,16 +192,15 @@ const filteredQuestions = computed(() =>
   height: 120px;
   border-radius: 50%;
   background:
-    radial-gradient(closest-side, #0e1117 78%, transparent 80% 100%),
-    conic-gradient(#6366f1 var(--val), rgba(255, 255, 255, 0.12) 0);
+    radial-gradient(closest-side, #ffffff 85%, transparent 80% 100%),
+    conic-gradient(#fb3451 0% var(--val), #f4f5fb var(--val) 100%);
   display: grid;
   place-items: center;
-  box-shadow: 0 6px 18px rgba(99, 102, 241, 0.25);
 }
 .result__ring-num {
-  font-weight: 700;
-  font-size: 22px;
-  color: #e5e7eb;
+  font-weight: 500;
+  font-size: 40px;
+  color: #242730;
 }
 .result__toolbar {
   display: flex;
@@ -229,7 +216,7 @@ const filteredQuestions = computed(() =>
   gap: 8px;
   align-items: center;
   font-size: 14px;
-  color: #cbd5e1;
+  color: #242730;
 }
 .toggle input {
   accent-color: #6366f1;
@@ -237,7 +224,7 @@ const filteredQuestions = computed(() =>
 .linklike {
   background: none;
   border: none;
-  color: #a5b4fc;
+  color: #242730;
   cursor: pointer;
   padding: 6px 8px;
   border-radius: 8px;
@@ -256,8 +243,8 @@ const filteredQuestions = computed(() =>
   margin: 0;
 }
 .qa-card {
-  background: rgba(2, 6, 23, 0.6);
-  border: 1px solid rgba(148, 163, 184, 0.18);
+  padding: 12px 30px;
+  background: #f4f5fb;
   border-radius: 14px;
   overflow: clip;
   transition:
@@ -266,8 +253,8 @@ const filteredQuestions = computed(() =>
     transform 0.12s ease;
 }
 .qa-card[open] {
-  background: rgba(2, 6, 23, 0.75);
-  border-color: rgba(148, 163, 184, 0.32);
+  padding-bottom: 44px;
+  background: #f4f5fb;
 }
 .qa-card:hover {
   transform: translateY(-1px);
@@ -285,34 +272,30 @@ const filteredQuestions = computed(() =>
   display: none;
 }
 .qa-year {
-  font-weight: 700;
-  color: #fbbf24;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+  font-weight: 400;
 }
 .qa-question {
-  color: #e5e7eb;
+  color: #242730;
   overflow-wrap: anywhere;
 }
 .badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 115px;
+  height: 38px;
   font-size: 12px;
-  font-weight: 700;
-  padding: 6px 10px;
+  font-weight: 500;
   border-radius: 999px;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
 }
 .badge--ok {
-  background: rgba(52, 211, 153, 0.18);
-  color: #34d399;
-  border: 1px solid rgba(52, 211, 153, 0.35);
+  color: #64e4b0;
+  border: 2px solid #64e4b0;
 }
 .badge--err {
-  background: rgba(239, 68, 68, 0.18);
-  color: #f87171;
-  border: 1px solid rgba(239, 68, 68, 0.35);
-}
-.qa-body {
-  padding: 0 16px 14px;
+  color: #d72e49;
+  border: 2px solid #d72e49;
 }
 .qa-row {
   display: grid;
@@ -320,13 +303,10 @@ const filteredQuestions = computed(() =>
   gap: 14px;
   padding: 12px;
   border-radius: 12px;
-  background: rgba(15, 23, 42, 0.55);
-  border: 1px dashed rgba(148, 163, 184, 0.25);
+  background: #ffffff;
+  box-shadow: 0 4px 12px #dadff4;
 }
-.qa-row.is-wrong {
-  background: rgba(239, 68, 68, 0.08);
-  border-color: rgba(239, 68, 68, 0.25);
-}
+
 .qa-col .label {
   font-size: 12px;
   color: #94a3b8;
@@ -335,11 +315,11 @@ const filteredQuestions = computed(() =>
   letter-spacing: 0.6px;
 }
 .answer {
-  color: #e5e7eb;
+  color: #242730;
 }
 .qa-expl {
   margin: 12px 0 0;
-  color: #cbd5e1;
+  color: #242730;
 }
 .qa-src {
   margin: 10px 0 0;

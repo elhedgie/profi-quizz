@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useQuizStore } from '@/stores/quiz'
-import { ref, watch, nextTick, computed, onMounted } from 'vue'
+import { ref, watch, nextTick, computed } from 'vue'
 import QuizHeader from '@/components/quiz/QuizHeader.vue'
 import QuizQuestion from '@/components/quiz/QuizQuestion.vue'
 import QuizFooter from '@/components/quiz/QuizFooter.vue'
@@ -25,33 +25,6 @@ watch(current, async () => {
   if (!rootEl.value) return
   rootEl.value.classList.add('is-rewinding')
   setTimeout(() => rootEl.value?.classList.remove('is-rewinding'), 520)
-})
-
-const bgSrc = computed(() => current.value?.image ?? '')
-
-/** preload текущего и следующего изображений */
-function preloadImage(href: string) {
-  if (!href) return
-  const key = `preload-${href}`
-  if (document.querySelector(`link[data-k="${CSS.escape(key)}"]`)) return
-  const link = document.createElement('link')
-  link.rel = 'preload'
-  link.as = 'image'
-  link.href = href
-  link.setAttribute('data-k', key)
-  document.head.appendChild(link)
-}
-function preloadAround() {
-  const cur = current.value
-  if (!cur?.image) return
-  preloadImage(cur.image)
-  const next = quiz.allQuestions[currentIndex.value + 1]
-  if (next?.image) preloadImage(next.image)
-}
-
-onMounted(preloadAround)
-watch([currentIndex, finished], () => {
-  if (!finished.value) preloadAround()
 })
 
 const percent = computed(() => Math.round((score.value / (total.value || 1)) * 100))
@@ -83,10 +56,6 @@ const filteredQuestions = computed(() =>
 
 <template>
   <main class="quiz" ref="rootEl">
-    <picture v-if="current?.image && !finished" class="quiz__bg" aria-hidden="true">
-      <img :key="bgSrc" :src="bgSrc" decoding="async" loading="eager" fetchpriority="high" alt="" />
-    </picture>
-
     <section class="quiz__container" v-if="!finished">
       <QuizHeader :current-index="currentIndex" :total="total" :progress="progress" />
 
@@ -133,52 +102,29 @@ const filteredQuestions = computed(() =>
   place-items: center;
   min-height: 100vh;
   padding: 24px;
-  background: linear-gradient(180deg, #0b0d12 0%, #0e1117 100%);
-  color: #e5e7eb;
-  font-family: Arial, Helvetica, sans-serif;
+  background: linear-gradient(180deg, #f1f1fb 0%, #d5dbfd 100%);
+  color: #242730;
+  font-family: 'ONY-FORMDigital-PROFI', Arial, Helvetica, sans-serif;
 
   --dur-enter: 480ms;
   --dur-leave: 360ms;
   --easing: cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
-.quiz__bg {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  display: block;
-}
-.quiz__bg img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  transition: transform var(--dur-enter) var(--easing);
-  will-change: transform;
-}
-
-.quiz.is-rewinding .quiz__bg img {
-  transform: scale(1.02);
-}
-
 .quiz__container {
   position: relative;
   z-index: 2;
-  width: 100%;
   max-width: 860px;
   margin: 0 auto;
-  padding: 32px 16px;
-  background: rgba(0, 0, 0, 0.15);
-  backdrop-filter: blur(8px);
+  padding: 32px 80px;
+  background: #ffffff;
+  box-shadow: 0 4px 28px #dadff4;
   border-radius: 20px;
   min-height: 70vh;
   display: flex;
   flex-direction: column;
 }
 
-/* Переходы вопросов */
 .rewind-enter-active,
 .rewind-leave-active,
 .forward-enter-active,
@@ -237,7 +183,6 @@ const filteredQuestions = computed(() =>
   }
 }
 
-/* accessibility */
 @media (prefers-reduced-motion: reduce) {
   .rewind-enter-active,
   .rewind-leave-active,
@@ -253,7 +198,6 @@ const filteredQuestions = computed(() =>
   }
 }
 
-/* responsive */
 @media (max-width: 720px) {
   .quiz {
     padding: 16px;

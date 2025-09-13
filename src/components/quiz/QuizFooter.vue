@@ -46,21 +46,32 @@ const emit = defineEmits<{
 }
 .quiz__nav {
   appearance: none;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  background: rgba(0, 0, 0, 0.4);
-  color: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: #f5f6fe;
+  color: #8b8bab;
   padding: 10px 14px;
   border-radius: 10px;
   cursor: pointer;
-  backdrop-filter: blur(4px);
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+  transition:
+    transform 0.12s ease,
+    border-color 0.12s ease,
+    background 0.12s ease;
+}
+.quiz__nav:hover {
+  transform: translateY(-1px);
+  background: #e8eafc;
 }
 .quiz__nav--primary {
   border-color: transparent;
-  background: linear-gradient(135deg, #6366f1, #ec4899);
+  background: #fa2a48;
+  color: white;
 }
-.quiz__nav[disabled] {
-  opacity: 0.6;
+.quiz__nav--primary:hover {
+  background-color: #d72e49;
+}
+
+.quiz__nav--primary[disabled] {
+  background: #f9dde2;
   cursor: not-allowed;
 }
 
