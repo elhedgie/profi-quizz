@@ -328,56 +328,167 @@ const filteredQuestions = computed(() =>
   color: #93c5fd;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 1024px) {
+  .quiz__result {
+    padding: 18px;
+    max-width: 100%;
+  }
+
+  .result__hero {
+    padding: 16px;
+  }
+
+  .result__title {
+    font-size: 20px;
+  }
+
+  .result__subtitle {
+    font-size: 14px;
+  }
+
+  .result__ring {
+    width: 100px;
+    height: 100px;
+  }
+
+  .result__ring-num {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 768px) {
   .result__hero {
     grid-template-columns: 1fr;
     text-align: center;
+    padding: 14px;
   }
+
   .result__actions {
     justify-content: center;
     width: 100%;
+    flex-direction: column;
+    gap: 8px;
   }
+
   .result__actions .btn {
     flex: 1 1 auto;
+    width: 100%;
   }
+
   .qa-summary {
-    grid-template-columns: 64px 1fr auto;
-    gap: 10px;
+    grid-template-columns: 60px 1fr auto;
+    gap: 8px;
+    padding: 12px 14px;
   }
+
   .qa-row {
     grid-template-columns: 1fr;
     padding: 10px;
   }
+
   .result__ring {
-    width: 96px;
-    height: 96px;
+    width: 90px;
+    height: 90px;
+    margin: 0 auto 16px;
   }
+
+  .result__ring-num {
+    font-size: 18px;
+  }
+
   .badge {
-    font-size: 11px;
-    padding: 4px 8px;
+    font-size: 10px;
+    padding: 3px 6px;
   }
+
   .quiz__result {
-    padding: 14px;
+    padding: 16px;
     border-radius: 12px;
   }
+
   .result__toolbar {
     flex-wrap: wrap;
     gap: 8px;
   }
-  .toggle {
-    font-size: 13px;
-  }
+
   .linklike {
-    padding: 6px 6px;
+    padding: 6px 8px;
+    font-size: 13px;
   }
 }
 
-@media (max-width: 420px) {
-  .qa-summary {
-    grid-template-columns: 48px 1fr;
+@media (max-width: 480px) {
+  .quiz__result {
+    padding: 12px;
+    border-radius: 10px;
   }
+
+  .result__hero {
+    padding: 12px;
+  }
+
+  .result__title {
+    font-size: 18px;
+  }
+
+  .result__subtitle {
+    font-size: 13px;
+  }
+
+  .result__ring {
+    width: 80px;
+    height: 80px;
+  }
+
+  .result__ring-num {
+    font-size: 16px;
+  }
+
+  .qa-summary {
+    grid-template-columns: 50px 1fr auto;
+    gap: 6px;
+    padding: 10px 12px;
+  }
+
+  .qa-year {
+    font-size: 12px;
+  }
+
+  .qa-question {
+    font-size: 13px;
+  }
+
+  .badge {
+    font-size: 9px;
+    padding: 2px 5px;
+  }
+
+  .qa-row {
+    padding: 8px;
+  }
+
+  .answer {
+    font-size: 13px;
+  }
+
+  .qa-expl {
+    font-size: 13px;
+  }
+
+  .linklike {
+    padding: 5px 6px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 360px) {
+  .qa-summary {
+    grid-template-columns: 40px 1fr;
+  }
+
   .badge {
     justify-self: start;
+    margin-top: 4px;
   }
 }
 </style>

@@ -75,17 +75,58 @@ const emit = defineEmits<{
   cursor: not-allowed;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 1024px) {
+  .quiz__footer {
+    gap: 10px;
+  }
+
+  .quiz__nav {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+
+  .quiz__hint {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 768px) {
   .quiz__footer {
     flex-direction: column-reverse;
     align-items: stretch;
     gap: 10px;
   }
+
   .quiz__footer-right {
     justify-content: space-between;
+    flex-direction: column;
+    gap: 8px;
   }
+
   .quiz__nav {
     width: 100%;
+    padding: 10px 14px;
+    font-size: 14px;
+  }
+
+  .quiz__hint {
+    text-align: center;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .quiz__footer {
+    gap: 8px;
+  }
+
+  .quiz__nav {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+
+  .quiz__hint {
+    font-size: 11px;
   }
 }
 </style>

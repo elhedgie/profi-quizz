@@ -268,10 +268,167 @@ button:focus-visible {
   border-radius: 14px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
+  .start {
+    padding: 20px;
+  }
+
   .box {
-    max-width: unset;
-    width: 100%;
+    padding: 30px 40px;
+  }
+
+  .title {
+    font-size: 40px;
+  }
+
+  .lede {
+    font-size: 20px;
+  }
+
+  .left-big-star {
+    left: 30px;
+    top: 180px;
+    width: 140px;
+    height: 140px;
+    opacity: 0.8;
+  }
+
+  .left-small-star {
+    left: 30px;
+    top: 80px;
+    width: 60px;
+    height: 60px;
+    opacity: 0.7;
+  }
+
+  .right-star {
+    right: 50px;
+    top: 350px;
+    width: 60px;
+    height: 60px;
+    opacity: 0.7;
+  }
+
+  .question-mark {
+    bottom: -10%;
+    right: 20px;
+    width: 120px;
+    opacity: 0.9;
+    z-index: 1;
+  }
+}
+
+@media (max-width: 900px) and (min-width: 769px) {
+  .left-big-star {
+    left: 20px;
+    top: 160px;
+    width: 100px;
+    height: 100px;
+    opacity: 0.75;
+  }
+
+  .left-small-star {
+    left: 20px;
+    top: 70px;
+    width: 45px;
+    height: 45px;
+    opacity: 0.65;
+  }
+
+  .right-star {
+    right: 30px;
+    top: 280px;
+    width: 45px;
+    height: 45px;
+    opacity: 0.65;
+  }
+}
+
+@media (max-width: 768px) {
+  .start {
+    padding: 16px;
+  }
+
+  .box {
+    padding: 24px 20px;
+  }
+
+  .title {
+    font-size: 32px;
+    margin-bottom: 20px;
+  }
+
+  .lede {
+    font-size: 18px;
+    line-height: 1.4;
+  }
+
+  .cta {
+    width: 160px;
+    height: 56px;
+    font-size: 18px;
+  }
+
+  .left-big-star {
+    left: 10px;
+    top: 120px;
+    width: 80px;
+    height: 80px;
+  }
+
+  .left-small-star {
+    left: 10px;
+    top: 40px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .right-star {
+    right: 20px;
+    top: 250px;
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .start {
+    padding: 12px;
+  }
+
+  .box {
+    padding: 20px 16px;
+  }
+
+  .title {
+    font-size: 28px;
+    margin-bottom: 16px;
+  }
+
+  .lede {
+    font-size: 16px;
+    line-height: 1.3;
+  }
+
+  .lede-sep {
+    margin: 20px auto;
+    width: 90%;
+  }
+
+  .cta {
+    width: 140px;
+    height: 50px;
+    font-size: 16px;
+  }
+
+  .left-big-star,
+  .left-small-star,
+  .right-star {
+    display: none;
+  }
+
+  .question-mark {
+    display: none;
   }
 }
 </style>

@@ -198,14 +198,37 @@ const filteredQuestions = computed(() =>
   }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 1024px) {
+  .quiz {
+    padding: 20px;
+  }
+
+  .quiz__container {
+    padding: 24px 40px;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
   .quiz {
     padding: 16px;
   }
+
   .quiz__container {
-    padding: 20px 14px;
-    border-radius: 14px;
+    padding: 20px 24px;
+    border-radius: 16px;
     min-height: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .quiz {
+    padding: 12px;
+  }
+
+  .quiz__container {
+    padding: 16px 20px;
+    border-radius: 12px;
   }
 }
 </style>

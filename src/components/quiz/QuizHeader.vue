@@ -68,13 +68,62 @@ const props = defineProps<{
   transition: width 0.2s ease;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 1024px) {
+  .quiz__header {
+    gap: 12px;
+  }
+
+  .quiz__subtitle {
+    font-size: 13px;
+  }
+
+  .quiz__home {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 768px) {
+  .quiz__header {
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .quiz__subtitle {
+    font-size: 12px;
+    order: 3;
+    width: 100%;
+    text-align: center;
+    margin-top: 8px;
+  }
+
+  .quiz__home {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+
+  .quiz__progress {
+    height: 6px;
+  }
+}
+
+@media (max-width: 480px) {
   .quiz__header {
     gap: 8px;
   }
+
+  .quiz__subtitle {
+    font-size: 11px;
+    margin-top: 6px;
+  }
+
   .quiz__home {
-    padding: 6px 8px;
-    font-size: 12px;
+    padding: 5px 8px;
+    font-size: 11px;
+  }
+
+  .quiz__progress {
+    height: 4px;
   }
 }
 </style>
